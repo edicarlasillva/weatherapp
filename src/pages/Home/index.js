@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
 import api from "./../../services/api";
 
@@ -17,11 +15,21 @@ const Home = () => {
   const [value, setValue] = useState("");
   const [cards, setCards] = useState([]);
 
-  function handleInputChange(event) {
-    setValue(event.target.value);
-  }
+  useEffect(() => {
+    const cardList = localStorage.getItem("cards");
 
-  async function handleSubmit(event) {
+    if (cardList) {
+      setCards(JSON.parse(cardList));
+    }
+  }, []);
+
+  useEffect(() => localStorage.setItem("cards", JSON.stringify(cards)));
+
+  const handleInputChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const response = await api.get(`?q=${value}&units=metric&appid=${key}`);
@@ -34,10 +42,17 @@ const Home = () => {
       icon: response.data.weather[0].icon,
     };
 
-    setCards([...cards, data]);
+    setCards([data, ...cards]);
 
     setValue("");
-  }
+  };
+
+  const handleRemoveItem = (index) => {
+    const listCards = cards.slice();
+
+    listCards.splice(index, 1);
+    setCards(listCards);
+  };
 
   return (
     <>
@@ -64,10 +79,13 @@ const Home = () => {
             </form>
           </SearchField>
           <WeatherList>
-            {cards.map((card) => (
-              <Link to={`details/${card.name}`}>
-                <WeatherItem key={card.id} data={card} />
-              </Link>
+            {cards.map((card, index) => (
+              <WeatherItem
+                key={card.index}
+                data={card}
+                details={`/details/${card.id}`}
+                remove={() => handleRemoveItem(index)}
+              />
             ))}
           </WeatherList>
         </Container>

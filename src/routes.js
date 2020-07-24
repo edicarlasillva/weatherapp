@@ -9,7 +9,7 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Route path="/" exact component={Home} />
-      <Route path="/details" component={Details} />
+      <Route path="/details/:id" component={Details} />
     </BrowserRouter>
   );
 };

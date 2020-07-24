@@ -84,3 +84,11 @@ export const TemperatureInfo = styled.div`
     color: var(--text);
   }
 `;
+
+export const ReturnButton = styled.div`
+  text-align: center;
+
+  a {
+    color: var(--text);
+  }
+`;
