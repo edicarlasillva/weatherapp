@@ -44,7 +44,7 @@ const Details = () => {
                     src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
                     alt=""
                   />
-                  <strong>{Math.trunc(infos.temp)} º</strong>
+                  <strong>{Math.trunc(infos.temp)}º</strong>
 
                   <TemperatureInfo>
                     <strong>{city.name}</strong>
@@ -62,12 +62,12 @@ const Details = () => {
 
                   <li>
                     <strong>Humidity</strong>
-                    <span>{infos.humidity}%</span>
+                    <span>{infos.humidity}</span>
                   </li>
 
                   <li>
                     <strong>Pressure</strong>
-                    <span>{infos.pressure}mb</span>
+                    <span>{infos.pressure}</span>
                   </li>
                 </ul>
               </>
